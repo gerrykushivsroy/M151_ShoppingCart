@@ -13,13 +13,17 @@ class ItemController extends Controller
      */
     public function listAction(Request $request)
     {
+        if (!$this->checkAccess($request)) {
+            return $this->redirect("/login");
+        }
+
         $mysql = $this->connectToDB();
         $sql = "SELECT * FROM srg_items";
         $result = $mysql->query($sql); 
         
         $row = $result->fetch_all();
 
-        return $this->render("List.html.php",["items" => $row ]);
+        return $this->render("List.html.php", ["items" => $row, "username" => $request->getSession()->get('username')]);
     }
 
     /**
@@ -27,6 +31,10 @@ class ItemController extends Controller
      */
     public function addAction(Request $request)
     {
+        if (!$this->checkAccess($request)) {
+            return $this->redirect("/login");
+        }
+
         $itemCount = $request->get("amount"); 
         $itemName = $request->get("name"); 
 
@@ -44,6 +52,10 @@ class ItemController extends Controller
      */
     public function removeAction(Request $request)
     {
+        if (!$this->checkAccess($request)) {
+            return $this->redirect("/login");
+        }
+
         $idToDelete = intval($request->get("id")); 
         $mysqli = $this->connectToDB(); 
         $statement = $mysqli->prepare("DELETE FROM srg_items WHERE id = ?"); 
@@ -57,6 +69,10 @@ class ItemController extends Controller
      */
     public function editAction(Request $request)
     {
+        if (!$this->checkAccess($request)) {
+            return $this->redirect("/login");
+        }
+
         $idToEdit = intval($request->get("id"));
         $mysqli = $this->connectToDB();
         $sql = "SELECT * FROM srg_items WHERE id = " . intval($idToEdit); 
@@ -64,6 +80,15 @@ class ItemController extends Controller
 
         $item = $result->fetch_array(MYSQLI_ASSOC);
         return $this->render("Edit.html.php", ["item" => $item]); 
+    }
+
+    private function checkAccess(Request $request) {
+        $session = $request->getSession();
+
+        if ($session->has('userId')) {
+            return true;
+        }
+        return false;
     }
 
     public function connectToDB()

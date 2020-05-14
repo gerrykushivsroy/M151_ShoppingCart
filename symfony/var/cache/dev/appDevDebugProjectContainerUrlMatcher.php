@@ -127,9 +127,22 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
             return array (  '_controller' => 'AppBundle\\Controller\\DefaultController::byeAction',  '_route' => 'app_default_bye',);
         }
 
-        // app_item_list
-        if ('/list' === $pathinfo) {
-            return array (  '_controller' => 'AppBundle\\Controller\\ItemController::listAction',  '_route' => 'app_item_list',);
+        if (0 === strpos($pathinfo, '/l')) {
+            // app_item_list
+            if ('/list' === $pathinfo) {
+                return array (  '_controller' => 'AppBundle\\Controller\\ItemController::listAction',  '_route' => 'app_item_list',);
+            }
+
+            // app_login_login
+            if ('/login' === $pathinfo) {
+                return array (  '_controller' => 'AppBundle\\Controller\\LoginController::loginAction',  '_route' => 'app_login_login',);
+            }
+
+            // app_login_logout
+            if ('/logout' === $pathinfo) {
+                return array (  '_controller' => 'AppBundle\\Controller\\LoginController::logoutAction',  '_route' => 'app_login_logout',);
+            }
+
         }
 
         // app_item_add
@@ -145,6 +158,11 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
         // app_item_edit
         if ('/edit' === $pathinfo) {
             return array (  '_controller' => 'AppBundle\\Controller\\ItemController::editAction',  '_route' => 'app_item_edit',);
+        }
+
+        // app_login_register
+        if ('/register' === $pathinfo) {
+            return array (  '_controller' => 'AppBundle\\Controller\\LoginController::registerAction',  '_route' => 'app_login_register',);
         }
 
         if ('/' === $pathinfo && !$allow) {

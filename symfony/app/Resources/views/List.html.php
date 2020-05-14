@@ -10,6 +10,8 @@
 </head>
 <body>
 <div class="mr-20 mr-30-md mr-40-lg mr-50-xl ml-20 ml-30-md ml-40-lg ml-50-xl">
+<h1>Einkaufsliste von <?php echo $username; ?></h1>
+
     <table class="table">
         <tr>
             <th>#</th>
@@ -47,6 +49,7 @@
 
         <button type="submit" class="button primary  mt-5">Add to Cart</button>
     </form>
+    <a class="btn btn-danger" href="/logout">Logout</a>
 
 </div>
 </body>
