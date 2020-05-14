@@ -25,7 +25,7 @@ class LoginController extends Controller
 
             $mysqli = $this->getMysqli();
 
-            $statement = $mysqli->prepare("INSERT INTO srg_user(username, password) VALUES(?,?)");
+            $statement = $mysqli->prepare("INSERT INTO srg_user (username, password) VALUES (?, ?)");    
             $statement->bind_param("ss", $username, $password);
             $statement->execute();
 
@@ -82,7 +82,7 @@ class LoginController extends Controller
 
     private function getMysqli() {
         // Versuche mit Datenbankserver zu verbinden
-        $mysqli = new \mysqli("login-67.hoststar.ch","inf17s","jL6LCigmf!YB8Hh","inf17s");
+        $mysqli = new \mysqli("login-67.hoststar.ch","inf17d","j5TQh!zmMtqsjY3","inf17d");
 
         $mysqli->set_charset('utf8');
 
